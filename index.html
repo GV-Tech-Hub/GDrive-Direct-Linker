@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drive Direct Link Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Dark background color */
+            color: #fff; /* Light text color */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto; /* Center the container */
+            padding: 20px;
+            background-color: #1f1f1f; /* Dark container background color */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* White box shadow for dark mode */
+        }
+
+        input[type="text"],
+        button,
+        #convertedUrl {
+            padding: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #3a3a3a; /* Dark input background color */
+            color: #fff; /* Light text color */
+            border: 1px solid #555; /* Dark border color */
+            border-radius: 5px;
+            outline: none; /* Remove input focus outline */
+        }
+
+        button {
+            background-color: #007bff; /* Blue button color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #convertedUrl {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #555; /* Dark border color */
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 10px;
+            box-sizing: border-box;
+            background-color: #3a3a3a; /* Dark input background color */
+            color: #fff; /* Light text color */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Google Drive Direct Link Converter</h1>
+        <label for="originalUrl">Paste your Google Drive sharing link below:</label>
+        <input type="text" id="originalUrl" placeholder="E.g. https://drive.google.com/file/d/1LDRlyZaZTF-bxHjBDEiL2obMxYHtf3YT/view?usp=sharing">
+        <button onclick="convertUrl()">Create Direct Link</button>
+        <input type="text" id="convertedUrl" placeholder="Converted URL will appear here" readonly>
+    </div>
+
+    <script>
+        function convertUrl() {
+            let originalUrl = document.getElementById("originalUrl").value;
+            let fileId = originalUrl.match(/[-\w]{25,}/)[0]; // Updated regular expression to extract the file ID
+            let directLink = `https://drive.google.com/uc?export=download&id=${fileId}`;
+            document.getElementById("convertedUrl").value = directLink;
+
+            // Copy to clipboard
+            let convertedUrlField = document.getElementById("convertedUrl");
+            convertedUrlField.select();
+            document.execCommand('copy');
+
+            // Open the download link in a new tab
+            window.open(directLink, '_blank');
+
+            // Notify user
+            alert("Direct link copied to clipboard and the download link has been opened in a new tab!");
+        }
+    </script>
+</body>
+
+</html>
